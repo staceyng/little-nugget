@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS sleep;
+
+DROP TABLE IF EXISTS diaper_changes CASCADE;
+
+DROP TABLE IF EXISTS poop_sizes;
+
+DROP TABLE IF EXISTS diaper_change_reasons;
+
+DROP TABLE IF EXISTS feeds CASCADE;
+
+DROP TABLE IF EXISTS feed_types;
+
+DROP TABLE IF EXISTS profiles;
+
+DROP TABLE IF EXISTS accounts;

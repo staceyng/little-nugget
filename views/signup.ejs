@@ -1,0 +1,76 @@
+<%- include('header'); -%>
+<body>
+  <div class="container-fluid">
+    <!-- first back button -->
+    <div class="row">
+        <a href="/login"><span class="bi bi-arrow-left"></span>Back</a>
+    </div>
+    <br>
+    <!-- app logo -->
+    <div class="row justify-content-center" id="app-logo">
+      <img
+        src="/images/user-account-blue-green.jpg"
+        alt="user-account-blue-green"
+        style="width: 130px; height: 110px"
+      />
+    </div>
+    <div class="row text-center" id="app-logo">
+      <span>
+        <br>
+        <h1 class="display-4">Sign Up</h2>
+        <p class="lead">Welcome! Sign up with your email and password to use BABYAPP</p>
+      </span>
+    </div>
+    <div class="row justify-content-center" id="signup-details">
+      <section class="col-12 col-md-4">
+        <form action="/accounts/sign-up" method="POST">
+          <!-- signup email -->
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <br />
+          <!-- signup password -->
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <br />
+          <!-- first name -->
+          <input
+            type="text"
+            class="form-control"
+            id="first_name"
+            name="first_name"
+            placeholder="First Name"
+            required
+          />
+          <br />
+          <!-- last name -->
+          <input
+            type="text"
+            class="form-control"
+            id="last_name"
+            name="last_name"
+            placeholder="Last Name"
+            required
+          />
+          <br />
+          <!-- signup button -->
+          <button type="submit" class="btn btn-primary btn-lg w-100">
+            Sign Up
+          </button>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>

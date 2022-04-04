@@ -1,0 +1,16 @@
+:root {
+  --off-white: #fef9ef;
+  --pastel-pink: #fe6d73;
+  --blue-green: #227c9d;
+  --teal: #17c3b2;
+  --yellow-orange: #ffcb77;
+  background: var(--off-white);
+}
+
+.container-fluid {
+  background-color: var(--off-white);
+}
+
+body {
+  background-color: var(--off-white);
+}

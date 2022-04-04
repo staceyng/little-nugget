@@ -1,0 +1,56 @@
+<%- include('header'); -%>
+<body>
+  <div class="container-fluid">
+    <br />
+    <!-- app logo -->
+    <div class="row justify-content-center" id="app-logo">
+      <img
+        src="/images/baby-app-logo-pink.jpg"
+        alt="baby-app-logo-pink"
+        style="width: 200px; height: 160px"
+      />
+    </div>
+    <div class="row justify-content-center" id="login-details">
+      <section class="col-12 col-md-4">
+        <form action="/login" method="POST">
+          <br />
+          <!-- login email -->
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <br />
+          <!-- login password -->
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <br />
+          <!-- login button -->
+          <button type="submit" class="btn btn-primary btn-lg w-100">
+            Login
+          </button>
+        </form>
+      </section>
+    </div>
+    <!-- sign-up bottom link -->
+    <div class="row text-center" id="sign-up-bottom-link">
+      <div class="col-12 col-md-4">
+        <br />
+        <span>
+          <p>Don't have an account? Click below to</p>
+          <a href="/accounts/sign-up">Sign-up</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>

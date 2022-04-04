@@ -1,0 +1,53 @@
+<%- include('header'); -%>
+
+<body>
+  <div class="container-fluid">
+    <!-- first back button -->
+    <div class="row">
+      <a href="/login"><span class="bi bi-arrow-left"></span>Back</a>
+    </div>
+    <br>
+    <!-- app logo -->
+    <div class="row justify-content-center" id="app-logo">
+      <img src="/images/baby-profile-orange.jpg" alt="baby-profile-orange" style="width: 130px; height: 120px" />
+    </div>
+    <div class="row text-center" id="app-logo">
+      <span>
+        <br>
+        <h1 class="display-4">Welcome</h2>
+        <p class="lead">Welcome to BABYAPP! To get things started, we need you create a profile for your child</p>
+      </span>
+    </div>
+    <div class="row justify-content-center" id="profile-setup-details">
+      <section class="col-12 col-md-4">
+        <form action="/accounts/<%= account_id %>/profile/set-up" method="POST">
+          <!-- Upload profile picture -->
+          <!-- profile name -->
+          <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required />
+          <br />
+          <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required />
+          <br />
+          <!-- DOB  -->
+          <input type="date" class="form-control" id="dob" name="dob" required />
+          <br />
+          <!-- GENDER -->
+          <p>Gender:</p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="gender" value="male">
+            <label class="form-check-label" for="gender">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="gender" value="female">
+            <label class="form-check-label" for="gender">Female</label>
+          </div>
+          <p></p>
+          <!-- signup button -->
+          <button type="submit" class="btn btn-primary btn-lg w-100">
+            Continue
+          </button>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>
