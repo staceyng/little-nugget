@@ -1,0 +1,27 @@
+{
+  "name": "project2-baby-app",
+  "main": "app.js",
+  "type": "module",
+  "description": "project 2 server side application",
+  "version": "1.0.0",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:create": "psql -d baby_app -f db/init_tables.sql",
+    "db:seed": "psql -d baby_app -f db/seed.sql",
+    "db:destroy": "psql -d baby_app -f db/nuke.sql"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "jssha": "^3.2.0",
+    "method-override": "^3.0.0",
+    "pg": "^8.7.3",
+    "uuid": "^8.3.2"
+  }
+}
