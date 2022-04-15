@@ -1,0 +1,78 @@
+<%- include('header'); -%>
+<body>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <img
+        src="/images/baby-app-logo-bw.jpg"
+        alt="baby-app-logo"
+        style="width: 60px; height: 33px"
+      />
+      <p class="lead text-center">Little Nugget</p>
+      <hr class="bg-danger border-2 border-top border-danger" />
+    </div>
+    <!-- tiles row 1 -->
+    <div class="row justify-content-evenly" id="action-tiles-row-1">
+      <!-- sleep tile -->
+      <tile class="col justify-content-center">
+        <a href="/accounts/<%= account_id %>/profile/<%= profile_id %>/sleep">
+          <img
+            class="img-tiles"
+            src="/images/sleep-bw.jpg"
+            alt="sleep-img"
+            id="sleep"
+            style="width: 140px; height: 125px"
+          />
+        </a>
+        <p class="lead text-center">Sleep</p>
+      </tile>
+      <!-- feed tile -->
+      <tile class="col justify-content-center">
+        <a href="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds">
+          <img
+            class="img-tiles"
+            src="/images/feed-bw.jpg"
+            alt="feed-img"
+            id="feeds"
+            style="width: 140px; height: 125px"
+          />
+        </a>
+        <p class="lead text-center">Feedings</p>
+      </tile>
+    </div>
+    <br />
+    <!-- tiles row 2-->
+    <div class="row justify-content-evenly" id="action-tiles-row-2">
+      <!-- milestones tile -->
+      <tile class="col justify-content-center">
+        <a
+          href="/accounts/<%= account_id %>/profile/<%= profile_id %>/milestones"
+        >
+          <img
+            class="img-tiles"
+            src="/images/milestones-bw.jpg"
+            alt="milestones-img"
+            id="milestones"
+            style="width: 140px; height: 125px"
+          />
+        </a>
+        <p class="lead text-center">Milestones</p>
+      </tile>
+      <!-- diaper change tile -->
+      <tile class="col justify-content-center">
+        <a
+          href="/accounts/<%= account_id %>/profile/<%= profile_id %>/diaper-changes"
+        >
+          <img
+            class="img-tiles"
+            src="/images/diaper-change-bw.jpg"
+            alt="diaper-change-img"
+            style="width: 140px; height: 125px"
+            id="diaper-changes"
+          />
+        </a>
+        <p class="lead text-center">Diaper Change</p>
+      </tile>
+    </div>
+  </div>
+</body>
+<%- include('navbarBottom'); -%> <%- include('footer'); -%>

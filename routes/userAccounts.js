@@ -44,6 +44,7 @@ export const postLogin = (req, resp) => {
         }
 
         const homeURL = `/accounts/${res.account_id}/profile/${res.profile_id}/home`;
+        resp.cookie("profile_id", `${res.profile_id}`);
         resp.status(200).redirect(homeURL);
       }
     })

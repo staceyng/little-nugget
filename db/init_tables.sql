@@ -78,6 +78,8 @@ CREATE TABLE IF NOT EXISTS sleep (
     id VARCHAR PRIMARY KEY,
     duration INT NOT NULL,
     notes TEXT,
+    sleep_start VARCHAR NOT NULL,
+    sleep_end VARCHAR NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     profile_id VARCHAR NOT NULL,

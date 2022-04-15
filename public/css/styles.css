@@ -4,13 +4,18 @@
   --blue-green: #227c9d;
   --teal: #17c3b2;
   --yellow-orange: #ffcb77;
-  background: var(--off-white);
+  /* background: var(--off-white); */
 }
 
 .container-fluid {
-  background-color: var(--off-white);
+  /* background-color: var(--off-white); */
 }
 
 body {
-  background-color: var(--off-white);
+  /* background-color: var(--off-white); */
+}
+
+.img-tiles {
+  border: 3px solid;
+  border-radius: 10px;
 }
