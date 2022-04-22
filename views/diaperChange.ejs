@@ -1,13 +1,10 @@
 <%- include('header'); -%>
 <body>
   <div class="container-fluid">
-    <section class="row-12 mt-3">
-      <a
-        href="/accounts/<%= account_id %>/profile/<%= profile_id %>/home"
-        class="link-primary"
-        >< Home</a
-        >
-    </section>
+    <!-- top title -->
+    <%- include('tileTitle'); -%>
+    <br>
+    <!-- title -->
     <br>
     <section class="row">
       <span>
@@ -72,7 +69,7 @@
             <br />
             <!-- Submit-Button -->
             <div class="row text-right">
-              <button type="submit" class="btn btn-primary w-100">Submit</button>
+              <button id= "form-submit-button" type="submit" class="btn btn-primary w-100">Submit</button>
             </div>
           </form>
         </div>
@@ -81,7 +78,7 @@
     <br>
     <!-- diaper change history -->
     <h2 class="display-6">
-    Diaper Change history</h1>
+    Diaper Change History</h1>
     <section id="diaper-change-history-section">
       <div class="accordion accordion-flush" id="accordionFlushExample">
         <% for (let i=0; i<diaper_changes.length; i+=1)  { %>
@@ -122,8 +119,8 @@
                 <div class="col" >
                   <section>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasRightEdit"
-                      aria-controls="offcanvasRightEdit">
+                      data-bs-target="#offcanvasRightEdit_<%=i%>"
+                      aria-controls="offcanvasRightEdit_<%=i%>">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -132,7 +129,7 @@
                     <div
                       class="offcanvas offcanvas-end"
                       tabindex="-1"
-                      id="offcanvasRightEdit"
+                      id="offcanvasRightEdit_<%=i%>"
                       aria-labelledby="editoffcanvasRightLabel"
                       >
                       <div class="offcanvas-header">
@@ -153,8 +150,8 @@
                           <label for="reason" class="form-label">Reason: </label>
                           <select class="form-select" aria-label="" id="reason" name="reason" >
                             <% for (let reason of diaper_change_reasons ){ %>
-                              let selected = (diaper_changes[i].reason === reason ) ? "selected" : "";
-                              <option value="<%= reason %>" <%= selected %> ><%= reason %></option>
+                              <% let selected = (diaper_changes[i].reason === reason ) ? "selected" : "" ; %>
+                              <option value="<%= reason %>" <%= selected %>><%= reason %></option>
                             <% } %>
                           </select>
                           <br />
@@ -162,20 +159,18 @@
                           <label for="size" class="form-label">Poop Size: </label>
                           <select class="form-select" aria-label="" id="size" name="size" >
                             <% for (let size of poop_sizes ){ %>
-                              let selected = (diaper_changes[i].poop_size === size ) ? "selected" : "";
-                            <option value="<%= size %>"><%= size %></option>
+                              <% let s = (diaper_changes[i].size === size) ? "selected" : "" ; %>
+                              <option value="<%= size %>" <%= s %>><%= size %></option>
                             <% } %>
                           </select>
                           <br />
                           <!-- notes -->
                           <label for="notes" class="form-label">Notes</label>
-                          <textarea class="form-control" id="notes" rows="3" name="notes">
-                            <%= diaper_changes[i] ? diaper_changes[i].notes : '' %>
-                          </textarea>
+                          <textarea class="form-control" id="notes" rows="3" name="notes"><%= diaper_changes[i] ? diaper_changes[i].notes : '' %></textarea>
                           <br />
                           <!-- Submit-Button -->
                           <div class="row text-right">
-                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                            <button id="form-submit-button" type="submit" class="btn btn-primary w-100">Submit</button>
                           </div>
                         </form>
                       </div>

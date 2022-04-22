@@ -1,0 +1,36 @@
+<%- include('header'); -%>
+<body>
+  <div class="container-fluid">
+    <!-- top title -->
+    <%- include('tileTitle'); -%>
+    <!-- profile image -->
+    <div class="row justify-content-center" id="app-logo">
+      <img
+        src="/images/baby-icon-color.jpg"
+        alt="baby-profile-orange"
+        style="width: 130px; height: 110px"
+      />
+    </div>
+    <br />
+    <!-- baby profile details -->
+    <div class="row text-center" id="app-logo-text">
+      <span>
+        <h2>Profile Details</h2>
+        <p><%= baby_profile.first_name %> <%= baby_profile.last_name %></p>
+        <p><%= baby_profile.formatted_dob %></p>
+        <p><%= baby_profile.gender %></p>
+      </span>
+    </div>
+    <!-- account details -->
+    <div class="row text-center" id="app-logo-text">
+      <span>
+        <h2>Account Holder Details</h2>
+        <p>
+          <%= account_profile.first_name %> <%= account_profile.last_name %>
+        </p>
+        <p><%= account_profile.email %></p>
+      </span>
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>

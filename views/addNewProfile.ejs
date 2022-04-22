@@ -1,0 +1,57 @@
+<%- include('header'); -%>
+<body>
+  <div class="container-fluid">
+    <!-- back button or x button -->
+    <div class="row justify-content-center text-end">
+      <section class="col-12 col-md-4">
+        <a href="/login"><span class="bi bi-x-lg"></span></a>
+      </section>
+    </div>
+    <br />
+    <!-- add new profile? logo -->
+    <div class="row justify-content-center text-center" id="app-logo">
+      <section class="col-12 col-md-4">
+        <img
+          src="/images/baby-profile-color.jpg"
+          alt="baby-profile-orange"
+          style="width: 130px; height: 140px"
+        />
+      </section>
+    </div>
+    <br />
+    <!-- main text buttons  -->
+    <div class="row justify-content-center text-center" id="app-logo-text">
+      <section class="col-12 col-md-4">
+        <span>
+          <h2 class="display-5">More nuggets</h2>
+          <p class="lead">Would you like to add another baby profile?</p>
+        </span>
+      </section>
+    </div>
+    <!-- action buttons -->
+    <!-- proceed to adding another profile -->
+    <div class="row justify-content-center text-center" id="app-logo-text">
+      <section class="col-12 col-md-4">
+        <a
+          class="btn btn-primary btn-lg w-100"
+          href="/accounts/<%= account_id %>/profile/add-profiles"
+          role="button"
+          >Yes</a
+        >
+      </section>
+    </div>
+    <br />
+    <!-- proceed to home page -->
+    <div class="row justify-content-center text-center" id="app-logo-text">
+      <section class="col-12 col-md-4">
+        <a
+          class="btn btn-secondary btn-lg w-100"
+          href="/accounts/<%= account_id %>/profile/<%= profile_id %>/home"
+          role="button"
+          >No</a
+        >
+      </section>
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>

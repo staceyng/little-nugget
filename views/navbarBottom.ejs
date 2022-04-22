@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg fixed-bottom navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#">Navbar w/ text</a>
+    <a
+      class="navbar-brand"
+      href="/accounts/<%= account_id %>/profile/<%= profile_id %>/home"
+      >👶</a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -14,14 +18,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% for (let p of baby_profiles ){ %> <% let active = (p.profile_id ===
+        profile_id ) ? "active" : "" ; %>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Profile2</a>
+          <a
+            class="nav-link <%= active %>"
+            aria-current="page"
+            href="/accounts/<%= p.account_id %>/profile/<%= p.profile_id %>/home"
+            ><%= p.first_name %></a
+          >
         </li>
+        <% } %>
         <li class="nav-item">
-          <a class="nav-link" href="#">Profile1</a>
+          <form
+            method="POST"
+            action="/accounts/<%= account_id %>/profile/<%= profile_id %>/logout?_method=DELETE"
+          >
+            <button type="submit" class="btn btn-primary">Logout</button>
+          </form>
         </li>
       </ul>
-      <span class="navbar-text"> Navbar text with an inline element </span>
+      <span class="navbar-text"></span>
     </div>
   </div>
 </nav>

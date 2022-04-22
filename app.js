@@ -8,8 +8,9 @@ import {
   getSignup,
   postSetupByAccountId,
   postSignup,
+  getSetupProfiles,
 } from "./routes/userAccounts.js";
-import { getHomePage } from "./routes/home.js";
+import { getHomePage, userLogout, getBabyProfilePage } from "./routes/home.js";
 import {
   getSleepPage,
   postSleep,
@@ -28,6 +29,7 @@ import {
   postDiaperChange,
   updateDiaperChange,
 } from "./routes/diaperChange.js";
+import { getMilestonesPage, postMilestone } from "./routes/milestones.js";
 
 const PORT = 3004;
 const app = express();
@@ -41,9 +43,15 @@ router.post("/accounts/sign-up", postSignup);
 
 router.get("/accounts/:account_id/profile/set-up", getSetupByAccountId);
 router.post("/accounts/:account_id/profile/set-up", postSetupByAccountId);
+router.get("/accounts/:account_id/profile/add-profiles", getSetupProfiles);
 
 // routers for home page
 router.get("/accounts/:account_id/profile/:profile_id/home", getHomePage);
+router.delete("/accounts/:accound_id/profile/:profile_id/logout", userLogout);
+router.get(
+  "/accounts/:account_id/profile/:profile_id/baby",
+  getBabyProfilePage
+);
 
 // routers for sleep page
 router.get("/accounts/:account_id/profile/:profile_id/sleep", getSleepPage);
@@ -87,10 +95,21 @@ router.delete(
   deleteDiaperChange
 );
 
+// milestones routes
+router.get(
+  "/accounts/:account_id/profile/:profile_id/milestones",
+  getMilestonesPage
+);
+router.post(
+  "/accounts/:account_id/profile/:profile_id/milestones",
+  postMilestone
+);
+
 // app middlewares
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false })); // get form data
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use("/", router);

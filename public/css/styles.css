@@ -4,7 +4,10 @@
   --blue-green: #227c9d;
   --teal: #17c3b2;
   --yellow-orange: #ffcb77;
+  --button-orange: #e76f51;
   /* background: var(--off-white); */
+  font-family: "Indie Flower", cursive;
+  font-family: "Neucha", cursive;
 }
 
 .container-fluid {
@@ -14,8 +17,38 @@
 body {
   /* background-color: var(--off-white); */
 }
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Indie Flower", cursive;
+}
 
+p,
+a,
+dd,
+dt,
+li {
+  font-family: "Neucha", cursive;
+}
+
+#tile-title,
+#tile-history,
+.form-label {
+  font-family: "Neucha", cursive;
+}
 .img-tiles {
-  border: 3px solid;
+  /* border: 3px solid; */
   border-radius: 10px;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  /* background-color: var(--button-orange) !important;
+  border-color: var(--button-orange) !important; */
+  background-color: var(--blue-green) !important;
+  border-color: var(--blue-green) !important;
 }

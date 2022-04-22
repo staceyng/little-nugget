@@ -2,12 +2,13 @@ import { pool } from "../db/db.js";
 import { DBError } from "../tools/errors.js";
 import { v4 as uuidv4 } from "uuid";
 
-import { DebugLogger, ErrorLogger } from "../tools/logger.js";
-import { datenow, processDateTime } from "../tools/time.js";
+import { DebugLogger } from "../tools/logger.js";
+import { datenow } from "../tools/datetime.js";
 
 const DIAPER_CHANGE_TABLE = "diaper_changes";
 const DIAPER_CHANGE_REASON_TABLE = "diaper_change_reasons";
 const POOP_SIZE_TABLE = "poop_sizes";
+const PROFILE_TABLE = "profiles";
 
 export const getDiaperChangePage = (req, resp) => {
   const accountId = req.params.account_id;
@@ -22,25 +23,36 @@ export const getDiaperChangePage = (req, resp) => {
 
   const q2 = `SELECT * from ${POOP_SIZE_TABLE}`;
   const q3 = `SELECT * from ${DIAPER_CHANGE_REASON_TABLE}`;
+  const q4 = `SELECT * from ${PROFILE_TABLE} where account_id = $1`;
+  const values4 = [accountId];
 
   pool
     .query(q, values)
     .then((result) => {
       DebugLogger("querying diaper changes table for diaper change history");
+      console.log(result.rows);
       renderObj["diaper_changes"] = result.rows;
-      return pool.query(q2).then((result2) => {
-        DebugLogger("querying poop_sizes table for poop_sizes");
-        const poopSizes = result2.rows.map((d) => d.size);
-        renderObj["poop_sizes"] = poopSizes;
-        return pool.query(q3).then((result3) => {
-          DebugLogger(
-            "querying diaper_change_reasons table for diaper change reasons"
-          );
-          const changeReasons = result3.rows.map((d) => d.reason);
-          renderObj["diaper_change_reasons"] = changeReasons;
-          resp.status(200).render("diaperChange", renderObj);
-        });
-      });
+      return pool.query(q2);
+    })
+    .then((result2) => {
+      DebugLogger("querying poop_sizes table for poop_sizes");
+      const poopSizes = result2.rows.map((d) => d.size);
+      renderObj["poop_sizes"] = poopSizes;
+      return pool.query(q3);
+    })
+    .then((result3) => {
+      DebugLogger(
+        "querying diaper_change_reasons table for diaper change reasons"
+      );
+      const changeReasons = result3.rows.map((d) => d.reason);
+      renderObj["diaper_change_reasons"] = changeReasons;
+      return pool.query(q4, values4);
+    })
+    .then((result4) => {
+      DebugLogger("querying profiles table for baby profiles from account_id");
+      const babyProfiles = result4.rows;
+      renderObj["baby_profiles"] = babyProfiles;
+      resp.status(200).render("diaperChange", renderObj);
     })
     .catch((err) => DBError(err, req, resp));
 };
@@ -51,7 +63,7 @@ export const postDiaperChange = (req, resp) => {
   const diaperChangeId = uuidv4();
   const payload = req.body;
   console.log(payload);
-  const notes = payload.notes.length === 0 ? "-" : payload.notes;
+  const notes = payload.notes.length === 0 ? "" : payload.notes.trim();
   const poopSize = payload.size.length === 0 ? null : payload.size;
 
   const q = `
@@ -82,7 +94,7 @@ export const updateDiaperChange = (req, resp) => {
 
   const payload = req.body;
   const poopSize = payload.size.length === 0 ? null : payload.size;
-  const notes = payload.notes.length === 0 ? "-" : payload.notes;
+  const notes = payload.notes.length === 0 ? "" : payload.notes.trim();
 
   const q = `
   UPDATE ${DIAPER_CHANGE_TABLE} SET

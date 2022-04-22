@@ -2,11 +2,12 @@ import { pool } from "../db/db.js";
 import { DBError } from "../tools/errors.js";
 import { v4 as uuidv4 } from "uuid";
 
-import { DebugLogger, ErrorLogger } from "../tools/logger.js";
-import { datenow, processDateTime } from "../tools/time.js";
+import { DebugLogger } from "../tools/logger.js";
+import { datenow } from "../tools/datetime.js";
 
 const FEED_TABLE = "feeds";
 const FEED_TYPES_TABLE = "feed_types";
+const PROFILE_TABLE = "profiles";
 
 export const getFeedPage = (req, resp) => {
   const accountId = req.params.account_id;
@@ -20,17 +21,26 @@ export const getFeedPage = (req, resp) => {
   let renderObj = { profile_id: profileId, account_id: accountId };
 
   const q2 = `SELECT * from ${FEED_TYPES_TABLE}`;
+  const q3 = `SELECT * from ${PROFILE_TABLE} where account_id = $1`;
+  const values3 = [accountId];
 
   pool
     .query(q, values)
     .then((result) => {
       DebugLogger("querying feeds table for feed history");
       renderObj["feed_history"] = result.rows;
-      return pool.query(q2).then((result2) => {
-        const feedTypes = result2.rows.map((d) => d.type);
-        renderObj["feed_types"] = feedTypes;
-        resp.status(200).render("feed", renderObj);
-      });
+      return pool.query(q2);
+    })
+    .then((result2) => {
+      const feedTypes = result2.rows.map((d) => d.type);
+      renderObj["feed_types"] = feedTypes;
+      return pool.query(q3, values3);
+    })
+    .then((result3) => {
+      DebugLogger("querying profiles table for baby profiles from account_id");
+      const babyProfiles = result3.rows;
+      renderObj["baby_profiles"] = babyProfiles;
+      resp.status(200).render("feed", renderObj);
     })
     .catch((err) => DBError(err, req, resp));
 };
@@ -42,7 +52,7 @@ export const postFeed = (req, resp) => {
   const payload = req.body;
   console.log(payload);
   const amt = payload.amount.length === 0 ? 0 : payload.amount;
-  const notes = payload.notes.length === 0 ? "-" : payload.notes;
+  const notes = payload.notes.length === 0 ? "" : payload.notes.trim();
 
   const q = `
   INSERT INTO ${FEED_TABLE} 
@@ -69,7 +79,7 @@ export const updateFeed = (req, resp) => {
   const feedId = req.params.feed_id;
 
   const payload = req.body;
-  const notes = payload.notes.length === 0 ? "-" : payload.notes;
+  const notes = payload.notes.length === 0 ? "" : payload.notes.trim();
 
   const q = `
   UPDATE ${FEED_TABLE} SET

@@ -2,7 +2,7 @@ import { generateHash, verifyHash } from "../tools/auth.js";
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../db/db.js";
 import { DBError } from "../tools/errors.js";
-import { DebugLogger, ErrorLogger } from "../tools/logger.js";
+import { DebugLogger } from "../tools/logger.js";
 
 const accountsTable = "accounts";
 const profileTable = "profiles";
@@ -15,7 +15,7 @@ export const postLogin = (req, resp) => {
   const payload = req.body; // email, password
   const values = [payload.email];
   const q = `
-  SELECT DISTINCT password, setup_completed, ${accountsTable}.account_id, ${profileTable}.profile_id 
+  SELECT DISTINCT email, password, setup_completed, ${accountsTable}.account_id, ${profileTable}.profile_id 
   FROM ${profileTable} INNER JOIN ${accountsTable} ON ${accountsTable}.account_id = ${profileTable}.account_id
   WHERE email = $1`;
 
@@ -32,7 +32,7 @@ export const postLogin = (req, resp) => {
 
         if (!verifyHash(unhashedPWInput, res.password)) {
           errMsg = "invalid login or password";
-          ErrorLogger(errMsg);
+          DebugLogger(errMsg);
           resp.status(401).send(errMsg);
         }
 
@@ -42,9 +42,10 @@ export const postLogin = (req, resp) => {
           const redirectURL = `/accounts/${res.account_id}/profile/set-up`;
           resp.status(302).redirect(redirectURL);
         }
-
+        const emailHash = generateHash(res.email);
         const homeURL = `/accounts/${res.account_id}/profile/${res.profile_id}/home`;
         resp.cookie("profile_id", `${res.profile_id}`);
+        resp.cookie("logged_in", `${emailHash}`);
         resp.status(200).redirect(homeURL);
       }
     })
@@ -98,7 +99,7 @@ export const postSetupByAccountId = (req, resp) => {
   const payload = req.body;
   const aid = req.params.account_id;
   const pid = uuidv4();
-  console.log(payload);
+  DebugLogger(`setting up account with payload: ${JSON.stringify(payload)}`);
   const values = [
     pid,
     payload.first_name,
@@ -116,22 +117,33 @@ export const postSetupByAccountId = (req, resp) => {
   const q2 = `UPDATE ${accountsTable} SET setup_completed = $1 WHERE account_id = $2`;
   const values2 = [true, aid];
 
+  let renderObj = { account_id: aid };
+
   pool
     .query(q, values)
     .then((result) => {
       console.log(
         `successfully created profile for baby: ${payload.first_name} ${payload.last_name}`
       );
-      console.log(result.rows);
       return pool.query(q2, values2);
     })
-    .then((result) => {
+    .then((result2) => {
       console.log(
         `successfully updated account setup completion for account: ${aid}`
       );
-      console.log(result.rows);
       const homeURL = `/accounts/${aid}/profile/${pid}/home`;
-      resp.status(201).redirect(homeURL);
+      renderObj["profile_id"] = pid;
+      DebugLogger("redirecting to adding a new profile page");
+      resp.status(200).render("addNewProfile", renderObj);
     })
     .catch((err) => DBError(err, req, resp));
+};
+
+export const getSetupProfiles = (req, resp) => {
+  const accountId = req.params.account_id;
+  let renderObj = {
+    account_id: accountId,
+  };
+
+  resp.render("newProfile", renderObj);
 };
