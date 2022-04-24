@@ -35,7 +35,8 @@ li {
 
 #tile-title,
 #tile-history,
-.form-label {
+.form-label,
+.form-check-label {
   font-family: "Neucha", cursive;
 }
 .img-tiles {
