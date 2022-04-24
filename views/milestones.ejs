@@ -3,58 +3,67 @@
   <div class="container-fluid">
     <!-- top title -->
     <%- include('tileTitle'); -%>
-    <br />
     <!-- title -->
-    <section class="row" id="title-heading">
-      <h1 class="display-4 text-left">Milestones</h1>
-      <p class="fw-normal text-muted">
-        Keep track of completed and upcoming milestones
-      </p>
-    </section>
-    <hr class="bg-danger border-2 border-top border-danger" />
+    <div class="row justify-content-center">
+      <section class="col-12 col-md-4" id="milestone-title">
+        <h1 class="display-4 text-left">Milestones</h1>
+        <p class="fw-normal text-muted">
+          Keep track of completed and upcoming milestones
+        </p>
+        <hr class="bg-danger border-2 border-top border-danger" />
+      </section>
+    </div>
     <!-- upcoming milestones -->
-    <section class="row" id="upcoming-milestones">
-      <span>
-        <h2 class="display-5 text-left">Upcoming milestones</h2>
-        <% const keys = Object.keys(upcoming_milestones) %> <% for (let k of
-        keys ){ %>
-        <p class="fw-normal text-left text-muted"><%= k %></p>
-        <% for (let ms of upcoming_milestones[k] ){ %> <% if
-        (!completed_milestones_id.includes(ms.milestone_id)) { %>
-        <div class="form-check">
-          <input
-            class="form-check-input-checkbox"
-            name="milestones-list"
-            type="checkbox"
-            value=""
-            id="<%= ms.milestone_id %>"
-            onchange="handleCheckboxChange(this);"
-          />
-          <label class="form-check-label" for="<%= ms.milestone_id %>">
-            Week <%= ms.week %>: <%= ms.description %>
-          </label>
-        </div>
-        <% } %> <% } %> <% } %>
-      </span>
-    </section>
-    <hr class="bg-danger border-2 border-top border-danger" />
-    <!-- completed milestones -->
-    <section class="row" id="completed_milestones">
-      <span>
-        <h2 class="display-5 text-left">Completed milestones</h2>
-      </span>
-    </section>
+    <div class="row justify-content-center" id="upcoming-milestones">
+      <section class="col-12 col-md-4">
+        <span>
+          <h2 class="display-5 text-left">Upcoming milestones</h2>
+          <% const keys = Object.keys(upcoming_milestones) %> <% for (let k of
+          keys ){ %>
+          <p class="fw-normal text-left text-muted"><%= k %></p>
+          <% for (let ms of upcoming_milestones[k] ){ %> <% if
+          (!completed_milestones_id.includes(ms.milestone_id)) { %>
+          <div class="form-check">
+            <input
+              class="form-check-input-checkbox"
+              name="milestones-list"
+              type="checkbox"
+              value=""
+              id="<%= ms.milestone_id %>"
+              onchange="handleCheckboxChange(this);"
+            />
+            <label class="form-check-label" for="<%= ms.milestone_id %>">
+              Week <%= ms.week %>: <%= ms.description %>
+            </label>
+          </div>
+          <% } %> <% } %> <% } %>
+        </span>
+        <hr class="bg-danger border-2 border-top border-danger" />
+      </section>
+    </div>
+    <!-- completed milestones title-->
+    <div class="row justify-content-center" id="completed_milestones">
+      <section class="col-12 col-md-4">
+        <span>
+          <h2 class="display-5 text-left">Completed milestones</h2>
+        </span>
+      </section>
+    </div>
     <!-- completed milestones list -->
-    <ul class="list-group list-group-flush">
-      <% for (let cm of completed_milestones ){ %>
-      <li class="list-group-item">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold"><%= cm.milestone_description %></div>
-          <%= cm.formatted_completed_at %>, <%= cm.tag %>
-        </div>
-      </li>
-    </ul>
-    <% } %>
+    <div class="row justify-content-center" id="completed_milestones">
+      <section class="col-12 col-md-4">
+        <ul class="list-group list-group-flush">
+          <% for (let cm of completed_milestones ){ %>
+          <li class="list-group-item">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold"><%= cm.milestone_description %></div>
+              <%= cm.formatted_completed_at %>, <%= cm.tag %>
+            </div>
+          </li>
+        </ul>
+        <% } %>
+      </section>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/script.js"></script>

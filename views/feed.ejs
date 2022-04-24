@@ -3,204 +3,213 @@
   <div class="container-fluid">
     <!-- top title -->
     <%- include('tileTitle'); -%>
-    <br>
     <!-- title -->
-    <section class="row">
+    <div class="row justify-content-center">
+      <section class="col-12 col-md-4" id="feed-title">
       <span>
         <h1 class="display-4 text-left">Feeds</h1>
         <p class="fw-normal text-muted">Log and track feeds and milk consumption</p>
       </span>
-    </section>
+      </section>
+    </div>
     <!-- feed button right offcanvas -->
-    <section>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasRight"
-        aria-controls="offcanvasRight"
-        >
-      New Feeding
-      </button>
-      <div
-        class="offcanvas offcanvas-end"
-        tabindex="-1"
-        id="offcanvasRight"
-        aria-labelledby="offcanvasRightLabel"
-        >
-        <div class="offcanvas-header">
-          <h5 id="offcanvasRightLabel">Enter new feed</h5>
-          <button
-            type="button"
-            class="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-            ></button>
-        </div>
-        <div class="offcanvas-body">
-          <form
-            action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds"
-            method="POST">
-            <!-- feed type -->
-            <label for="feed_type" class="form-label">Feed Types</label>
-            <select class="form-select" aria-label="Default select example" id="feed_type" name="feed_type" >
-              <% for (let type of feed_types ){ %>
-              <option value="<%= type %>"><%= type %></option>
-              <% } %>
-            </select>
-            <br />
-            <!-- amount -->
-            <label for="amount" class="form-label">Milk Amount (ml)</label>
-            <input
-              type="number"
-              class="form-control"
-              id="amount"
-              name="amount"
-              value=""
-              />
-            <br />
-            <!-- notes -->
-            <label for="notes" class="form-label">Notes</label>
-            <textarea
-              class="form-control"
-              id="notes"
-              rows="3"
-              name="notes"
-              ></textarea>
-            <br />
-            <!-- Submit-Button -->
-            <div class="row text-right">
-              <button type="submit" id= "form-submit-button" class="btn btn-primary w-100">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-    <br>
-    <!-- feed history -->
-    <h2 class="display-6">
-    Feed History</h1>
-    <section id="feed-history-section">
-      <div class="accordion accordion-flush" id="accordionFlushExample">
-        <% for (let i=0; i<feed_history.length; i+=1)  { %>
-        <!-- feed history item -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-heading-<%= i+1%>">
+    <div class="row justify-content-center">
+      <section class="col-12 col-md-4" id="new-sleep-button">
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+          >
+        New Feeding
+        </button>
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvasRight"
+          aria-labelledby="offcanvasRightLabel"
+          >
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Enter new feed</h5>
             <button
-              class="accordion-button collapsed"
               type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#flush-collapse-<%= i+1%>"
-              aria-expanded="false"
-              aria-controls="flush-collapse-<%= i+1%>"
-              >
-            <%= i+1 %>. <%= feed_history[i].formatted_created_at %>
-            </button>
-          </h2>
-          <div
-            id="flush-collapse-<%= i+1%>"
-            class="accordion-collapse collapse"
-            aria-labelledby="flush-heading-<%= i+1%>"
-            data-bs-parent="#accordionFlushExample"
-            >
-            <div class="accordion-body">
-              <dl class="row">
-                <dt class="col-sm-3">Feed Type:</dt>
-                <dd class="col-sm-9"><%= feed_history[i].feed_type %> </dd>
-                <% if (feed_history[i].feed_type === "milk") { %> 
-                <dt class="col-sm-3">Feed Amount:</dt>
-                <dd class="col-sm-9"><%= feed_history[i].amount %> ml</dd>
-                <% } %> 
-                <dt class="col-sm-3">Notes:</dt>
-                <dd class="col-sm-9"><%= feed_history[i].notes %></dd>
-              </dl>
-              <!-- action items - edit delete -->
-              <dl class="row justify-content-center">
-                <!-- edit -->
-                <div class="col" >
-                  <section>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasRightEdit_<%=i%>"
-                      aria-controls="offcanvasRightEdit_<%=i%>">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                      </svg>
-                    </button>
-                    <div
-                      class="offcanvas offcanvas-end"
-                      tabindex="-1"
-                      id="offcanvasRightEdit_<%=i%>"
-                      aria-labelledby="editoffcanvasRightLabel"
-                      >
-                      <div class="offcanvas-header">
-                        <h5 id="editoffcanvasRightLabel">Edit feeding</h5>
-                        <button
-                          type="button"
-                          class="btn-close text-reset"
-                          data-bs-dismiss="offcanvas"
-                          aria-label="Close"
-                          ></button>
-                      </div>
-                      <div class="offcanvas-body">
-                        <form
-                          action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds/<%= feed_history[i].id %>?_method=PUT"
-                          method="POST"
-                          >
-                          <!-- feed type -->
-                          <label for="feed_type" class="form-label">Feed Types</label>
-                          <select class="form-select" aria-label="" id="feed_type" name="feed_type" >
-                             <% for (let type of feed_types ){ %>
-                              <% let selected = (feed_history[i].feed_type === type ) ? "selected" : ""; %>
-                              <option value="<%= type %>" <%= selected %>><%= type %></option>
-                             <% } %>
-                          </select>
-                          <br />
-                          <!-- amount -->
-                          <label for="amount" class="form-label">Milk Amount (ml)</label>
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="amount"
-                            name="amount"
-                            value="<%= feed_history ? feed_history[i].amount : 0 %>"
-                            />
-                          <br />
-                          <!-- notes -->
-                          <label for="notes" class="form-label">Notes</label>
-                          <textarea
-                            class="form-control"
-                            id="notes"
-                            rows="3"
-                            name="notes"
-                            ><%= feed_history ? feed_history[i].notes : '' %></textarea>
-                          <br />
-                          <!-- Submit-Button -->
-                          <div class="row text-right">
-                            <button type="submit" id= "form-submit-button" class="btn btn-primary w-100">Submit</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <!-- delete -->
-                <div class="col justify-content-center">
-                  <form method="POST" action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds/<%=feed_history[i].id %>?_method=DELETE">
-                    <button type="submit" class="btn btn-secondary">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
-                      </svg>
-                    </button>
-                  </form>
-                </div>
-              </dl>
-            </div>
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              ></button>
+          </div>
+          <div class="offcanvas-body">
+            <form
+              action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds"
+              method="POST">
+              <!-- feed type -->
+              <label for="feed_type" class="form-label">Feed Types</label>
+              <select class="form-select" aria-label="Default select example" id="feed_type" name="feed_type" >
+                <% for (let type of feed_types ){ %>
+                <option value="<%= type %>"><%= type %></option>
+                <% } %>
+              </select>
+              <br />
+              <!-- amount -->
+              <label for="amount" class="form-label">Milk Amount (ml)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="amount"
+                name="amount"
+                value=""
+                />
+              <br />
+              <!-- notes -->
+              <label for="notes" class="form-label">Notes</label>
+              <textarea
+                class="form-control"
+                id="notes"
+                rows="3"
+                name="notes"
+                ></textarea>
+              <br />
+              <!-- Submit-Button -->
+              <div class="row text-right">
+                <button type="submit" id= "form-submit-button" class="btn btn-primary w-100">Submit</button>
+              </div>
+            </form>
           </div>
         </div>
-        <% } %>
-      </div>
-    </section>
+      </section>
+    </div>
+    <br>
+    <!-- feed history title-->
+    <div class="row justify-content-center">
+      <section class="col-12 col-md-4" id="sleep-history-section">
+        <h2 class="display-6">Feed History</h2>
+      </section>
+    </div>
+    <!-- feed history section -->
+    <div class="row justify-content-center">
+      <section class="col-12 col-md-4" id="feed-history-section">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <% for (let i=0; i<feed_history.length; i+=1)  { %>
+          <!-- feed history item -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-<%= i+1%>">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapse-<%= i+1%>"
+                aria-expanded="false"
+                aria-controls="flush-collapse-<%= i+1%>"
+                >
+              <%= i+1 %>. <%= feed_history[i].formatted_created_at %>
+              </button>
+            </h2>
+            <div
+              id="flush-collapse-<%= i+1%>"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-heading-<%= i+1%>"
+              data-bs-parent="#accordionFlushExample"
+              >
+              <div class="accordion-body">
+                <dl class="row">
+                  <dt class="col-sm-3">Feed Type:</dt>
+                  <dd class="col-sm-9"><%= feed_history[i].feed_type %> </dd>
+                  <% if (feed_history[i].feed_type === "milk") { %> 
+                  <dt class="col-sm-3">Feed Amount:</dt>
+                  <dd class="col-sm-9"><%= feed_history[i].amount %> ml</dd>
+                  <% } %> 
+                  <dt class="col-sm-3">Notes:</dt>
+                  <dd class="col-sm-9"><%= feed_history[i].notes %></dd>
+                </dl>
+                <!-- action items - edit delete -->
+                <dl class="row justify-content-center">
+                  <!-- edit -->
+                  <div class="col" >
+                    <section>
+                      <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRightEdit_<%=i%>"
+                        aria-controls="offcanvasRightEdit_<%=i%>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                      </button>
+                      <div
+                        class="offcanvas offcanvas-end"
+                        tabindex="-1"
+                        id="offcanvasRightEdit_<%=i%>"
+                        aria-labelledby="editoffcanvasRightLabel"
+                        >
+                        <div class="offcanvas-header">
+                          <h5 id="editoffcanvasRightLabel">Edit feeding</h5>
+                          <button
+                            type="button"
+                            class="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="offcanvas-body">
+                          <form
+                            action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds/<%= feed_history[i].id %>?_method=PUT"
+                            method="POST"
+                            >
+                            <!-- feed type -->
+                            <label for="feed_type" class="form-label">Feed Types</label>
+                            <select class="form-select" aria-label="" id="feed_type" name="feed_type" >
+                              <% for (let type of feed_types ){ %>
+                                <% let selected = (feed_history[i].feed_type === type ) ? "selected" : ""; %>
+                                <option value="<%= type %>" <%= selected %>><%= type %></option>
+                              <% } %>
+                            </select>
+                            <br />
+                            <!-- amount -->
+                            <label for="amount" class="form-label">Milk Amount (ml)</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="amount"
+                              name="amount"
+                              value="<%= feed_history ? feed_history[i].amount : 0 %>"
+                              />
+                            <br />
+                            <!-- notes -->
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea
+                              class="form-control"
+                              id="notes"
+                              rows="3"
+                              name="notes"
+                              ><%= feed_history ? feed_history[i].notes : '' %></textarea>
+                            <br />
+                            <!-- Submit-Button -->
+                            <div class="row text-right">
+                              <button type="submit" id= "form-submit-button" class="btn btn-primary w-100">Submit</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <!-- delete -->
+                  <div class="col justify-content-center">
+                    <form method="POST" action="/accounts/<%= account_id %>/profile/<%= profile_id %>/feeds/<%=feed_history[i].id %>?_method=DELETE">
+                      <button type="submit" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </section>
+    </div>
   </div>
 </body>
 <%- include('navbarBottom'); -%> <%- include('footer'); -%>
