@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS milestones_list;
+
+DROP TABLE IF EXISTS milestones;
+
 DROP TABLE IF EXISTS sleep;
 
 DROP TABLE IF EXISTS diaper_changes CASCADE;

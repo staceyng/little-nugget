@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:create": "psql -d baby_app -f db/init_tables.sql",
     "db:seed": "psql -d baby_app -f db/seed.sql",
-    "db:destroy": "psql -d baby_app -f db/nuke.sql"
+    "db:destroy": "psql -d baby_app -f db/nuke.sql",
+    "db:clear": "psql -d baby_app -f db/clear_tables.sql"
   },
   "keywords": [],
   "author": "",
