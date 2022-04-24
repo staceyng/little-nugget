@@ -1,8 +1,12 @@
-# Project2 - Baby Tracking App
+# Project 2 - Baby Tracking App
 
 ## Motivation & Objectives
 
 Little Nugget is a baby app for parents to keep track of their baby's feed, diaper changing and sleep throughout the day. They will also be able to check what their baby's next milestones are according to the baby's age (up to 1 YO).
+
+### Documentation
+
+Documentation about user flow diagrams and UI mockups can be found in the `docs` folder
 
 ### Libraries used in this project
 
@@ -128,3 +132,12 @@ Little Nugget is a baby app for parents to keep track of their baby's feed, diap
 
 - https://fonts.google.com/specimen/Neucha?preview.text=Little%20Nugget&preview.text_type=custom
 - https://fonts.google.com/specimen/Indie+Flower?preview.text=Little%20Nugget&preview.text_type=custom
+
+### Icons
+
+- https://thenounproject.com/icon/edit-profile-3194844/
+- https://thenounproject.com/icon/baby-4052774/
+- https://thenounproject.com/icon/baby-3516370/
+- https://thenounproject.com/icon/baby-3214257/
+- https://thenounproject.com/icon/baby-2869964/
+- https://thenounproject.com/icon/baby-4357099/
